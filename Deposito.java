@@ -1,14 +1,17 @@
 import java.util.ArrayList;
 
-class Deposito{
-    private ArrayList al;
+class Deposito<T> { 
+    private ArrayList<T> al;
+    
     public Deposito(){
-        al = new ArrayList();
+        al = new ArrayList<>();
     }
-    public void addObject(Object x){
+    
+    public void addObject(T x){ 
         al.add(x);
     }
-    public Object getObject(){
+    
+    public T getObject(){
         if (al.size() == 0) {
             return null;
         }
