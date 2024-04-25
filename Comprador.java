@@ -3,16 +3,17 @@ class Comprador{
     private String sonido;
     private int vueltoTotal = 0;
     
-    public Comprador(Moneda m,int cual, Expendedor exp){
+    public Comprador(Producto producto, Moneda moneda, int numeroDeposito, Expendedor exp){
         expendedor = exp;
-        Bebida bebida = exp.comprarBebida(m, cual);
+        Producto productoComprado = expendedor.comprarProducto(moneda, numeroDeposito, producto);
         for (Moneda i = expendedor.getVuelto(); i != null ; i = expendedor.getVuelto()) {
             vueltoTotal += i.getValor();
         }
-        if (bebida == null) {
+        if (productoComprado == null) {
             sonido = null;
+        } else {
+            sonido = productoComprado.toString();
         }
-        else sonido = bebida.beber();
     }
     public int cuantoVuelto(){
         return vueltoTotal;
