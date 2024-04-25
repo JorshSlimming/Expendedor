@@ -1,6 +1,18 @@
+/**
+ * La clase principal que contiene el método main para ejecutar el programa de compra de productos.
+ */
 public class main {
+
+    /**
+     * El método principal que inicia el programa.
+     *
+     * @param args Los argumentos de la línea de comandos (no se utilizan en este programa).
+     */
     public static void main(String[] args) {
-        Expendedor expendedor = new Expendedor(10, 10); // Crear un expendedor con 10 bebidas y 10 snacks
+        // Crear un expendedor con 10 bebidas y 10 snacks
+        Expendedor expendedor = new Expendedor(10, 10);
+
+        // Crear instancias de monedas
         Moneda moneda1000 = new Moneda1000();
         Moneda moneda500 = new Moneda500();
         Moneda moneda100 = new Moneda100();
