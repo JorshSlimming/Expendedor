@@ -1,4 +1,4 @@
-public class Main {
+public class main {
     public static void main(String[] args) {
         Expendedor expendedor = new Expendedor(10, 10); // Crear un expendedor con 10 bebidas y 10 snacks
         Moneda moneda1000 = new Moneda1000();
