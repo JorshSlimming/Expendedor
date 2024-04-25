@@ -1,51 +1,91 @@
 class Expendedor {
-    private Deposito<Producto.Bebida> depositoBebidas;
-    private Deposito<Producto.Snack> depositoSnacks;
-    private Deposito<Moneda> monedasVuelto;
+    private Deposito<Producto.Bebida> bebidas;
+    private Deposito<Producto.Snack> snacks;
+    private Deposito<Moneda> vuelto;
 
     public Expendedor(int numBebidas, int numSnacks) {
-        depositoBebidas = new Deposito<>();
-        depositoSnacks = new Deposito<>();
-        monedasVuelto = new Deposito<>();
+        bebidas = new Deposito<>();
+        snacks = new Deposito<>();
+        vuelto = new Deposito<>();
 
         for (int i = 0; i < numBebidas; i++) {
-            depositoBebidas.addObject(Producto.Bebida.COCA);
-            depositoBebidas.addObject(Producto.Bebida.SPRITE);
-        }
-
-        for (int i = 0; i < numSnacks; i++) {
-            depositoSnacks.addObject(Producto.Snack.PAPAS);
-            depositoSnacks.addObject(Producto.Snack.CHOCOLATE);
+            bebidas.addObject(Producto.Bebida.COCA);
+            bebidas.addObject(Producto.Bebida.SPRITE);
+            snacks.addObject(Producto.Snack.PAPAS);
+            snacks.addObject(Producto.Snack.CHOCOLATE);
         }
     }
 
-    public Producto comprarProducto(Moneda m, int numeroDeposito, Producto producto) {
-        if (m == null) {
-            monedasVuelto.addObject(new Moneda0());
-            return null;
-        }
-
-        Deposito<Producto> deposito;
+    public Producto comprarProducto(Moneda moneda, int numeroDeposito, Producto producto) throws PagoIncorrectoException, NoHayProductoException {
         switch (producto) {
             case BEBIDA:
-                deposito = depositoBebidas;
-                break;
+                switch (numeroDeposito) {
+                    case 1:
+                        return comprarBebida(moneda, bebidas, Producto.Bebida.COCA);
+                    case 2:
+                        return comprarBebida(moneda, bebidas, Producto.Bebida.SPRITE);
+                    default:
+                        throw new NoHayProductoException();
+                }
             case SNACK:
-                deposito = depositoSnacks;
-                break;
+                switch (numeroDeposito) {
+                    case 1:
+                        return comprarSnack(moneda, snacks, Producto.Snack.PAPAS);
+                    case 2:
+                        return comprarSnack(moneda, snacks, Producto.Snack.CHOCOLATE);
+                    default:
+                        throw new NoHayProductoException();
+                }
             default:
-                return null;
+                throw new NoHayProductoException();
         }
+    }
 
-        if (m.getValor() >= producto.getPrecio()) {
-            return deposito.getObject();
+    private Producto comprarBebida(Moneda moneda, Deposito<Producto.Bebida> deposito, Producto.Bebida bebida) throws PagoIncorrectoException, NoHayProductoException {
+        int precio = bebida.getPrecio();
+        if (moneda == null) {
+            throw new PagoIncorrectoException();
+        }
+        if (moneda.getValor() >= precio) {
+            deposito.getObject(); // Sacar la bebida del depósito
+            getVuelto(moneda.getValor() - precio);
+            return Producto.BEBIDA;
         } else {
-            monedasVuelto.addObject(m);
-            return null;
+            throw new PagoIncorrectoException();
         }
     }
 
-    public Moneda getVuelto() {
-        return monedasVuelto.getObject();
+    private Producto comprarSnack(Moneda moneda, Deposito<Producto.Snack> deposito, Producto.Snack snack) throws PagoIncorrectoException, NoHayProductoException {
+        int precio = snack.getPrecio();
+        if (moneda == null) {
+            throw new PagoIncorrectoException();
+        }
+        if (moneda.getValor() >= precio) {
+            deposito.getObject();
+            getVuelto(moneda.getValor() - precio);
+            return Producto.SNACK;
+        } else {
+            throw new PagoIncorrectoException();
+        }
     }
+
+    private void getVuelto(int cambio) {
+        while (cambio >= 100) {
+
+            }
+        }
+
+        class PagoIncorrectoException extends Exception {
+            public PagoIncorrectoException() {
+                super("Pago incorrecto");
+            }
+        }
+        
+        class NoHayProductoException extends Exception {
+            public NoHayProductoException() {
+                super("No hay producto disponible");
+            }
+        }
+
+
 }
