@@ -17,15 +17,15 @@ class Comprador {
                 vueltoTotal += vuelto.getValor();
             }
         } catch (Expendedor.PagoIncorrectoException e) {
-            System.out.println("Pago incorrecto: " + e.getMessage());
+            System.out.println(e.getMessage());
         } catch (Expendedor.NoHayProductoException e) {
-            System.out.println("No hay producto disponible: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
     private void consumirProducto(Producto producto) {
         if (producto != null) {
-            System.out.println("Producto adquirido: ");
+            System.out.println(" ");
         }
     }
 
