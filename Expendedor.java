@@ -11,6 +11,7 @@ class Expendedor {
         for (int i = 0; i < numBebidas; i++) {
             bebidas.addObject(Producto.Bebida.COCA);
             bebidas.addObject(Producto.Bebida.SPRITE);
+            bebidas.addObject(Producto.Bebida.FANTA);
             snacks.addObject(Producto.Snack.PAPAS);
             snacks.addObject(Producto.Snack.CHOCOLATE);
         }
@@ -31,6 +32,9 @@ class Expendedor {
                 break;
             case 4:
                 producto = comprarSnack(moneda, Producto.Snack.CHOCOLATE);
+                break;
+            case 5:
+                producto = comprarBebida(moneda, Producto.Bebida.FANTA);
                 break;
             default:
                 throw new NoHayProductoException();

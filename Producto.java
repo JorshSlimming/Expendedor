@@ -12,7 +12,8 @@ enum Producto {
     
     enum Bebida {
         COCA("Coca-Cola 550cc", 300),
-        SPRITE("Sprite 550cc", 400);
+        SPRITE("Sprite 550cc", 400),
+        FANTA("Fanta 500cc", 400);
 
         private final String nombre;
         private final int precio;
