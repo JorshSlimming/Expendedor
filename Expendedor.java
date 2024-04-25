@@ -19,26 +19,26 @@ class Expendedor {
         }
     }
 
-    public Producto.Bebida comprarBebida(Moneda m, Producto.Bebida bebida) {
+    public Producto comprarProducto(Moneda m, int numeroDeposito, Producto producto) {
         if (m == null) {
             monedasVuelto.addObject(new Moneda0());
             return null;
         }
-        if (m.getValor() >= bebida.getPrecio()) {
-            return depositoBebidas.getObject();
-        } else {
-            monedasVuelto.addObject(m);
-            return null;
-        }
-    }
 
-    public Producto.Snack comprarSnack(Moneda m, Producto.Snack snack) {
-        if (m == null) {
-            monedasVuelto.addObject(new Moneda0());
-            return null;
+        Deposito<Producto> deposito;
+        switch (producto) {
+            case BEBIDA:
+                deposito = depositoBebidas;
+                break;
+            case SNACK:
+                deposito = depositoSnacks;
+                break;
+            default:
+                return null;
         }
-        if (m.getValor() >= snack.getPrecio()) {
-            return depositoSnacks.getObject();
+
+        if (m.getValor() >= producto.getPrecio()) {
+            return deposito.getObject();
         } else {
             monedasVuelto.addObject(m);
             return null;
