@@ -1,24 +1,40 @@
-class Comprador{
-    private Expendedor expendedor;
+class Comprador {
     private String sonido;
-    private int vueltoTotal = 0;
-    
-    public Comprador(Producto producto, Moneda moneda, int numeroDeposito, Expendedor exp){
-        expendedor = exp;
-        Producto productoComprado = expendedor.comprarProducto(moneda, numeroDeposito, producto);
-        for (Moneda i = expendedor.getVuelto(); i != null ; i = expendedor.getVuelto()) {
-            vueltoTotal += i.getValor();
-        }
-        if (productoComprado == null) {
-            sonido = null;
-        } else {
-            sonido = productoComprado.toString();
+    private int vueltoTotal;
+
+    public Comprador(Moneda moneda, int numeroDeposito, Expendedor exp) {
+        try {
+            Producto producto = exp.comprarProducto(moneda, numeroDeposito);
+            sonido = consumirProducto(producto);
+
+            Moneda vuelto;
+            while ((vuelto = exp.getVuelto()) != null) {
+                vueltoTotal += vuelto.getValor();
+            }
+        } catch (Expendedor.PagoIncorrectoException e) {
+            System.out.println("Pago incorrecto: " + e.getMessage());
+        } catch (Expendedor.NoHayProductoException e) {
+            System.out.println("No hay producto disponible: " + e.getMessage());
         }
     }
-    public int cuantoVuelto(){
+
+    private String consumirProducto(Producto producto) {
+        if (producto != null) {
+            switch (producto) {
+                case BEBIDA:
+                    return "Bebida adquirida";
+                case SNACK:
+                    return "Snack adquirido";
+            }
+        }
+        return null;
+    }
+
+    public int cuantoVuelto() {
         return vueltoTotal;
     }
-    public String queBebiste(){
+
+    public String queBebiste() {
         return sonido;
     }
 }
