@@ -1,11 +1,16 @@
 class Comprador {
-    private String sonido;
+    private Producto productoConsumido;
     private int vueltoTotal;
+    private int numeroDeposito; // Añadir numeroDeposito como atributo
 
     public Comprador(Moneda moneda, int numeroDeposito, Expendedor exp) {
+        this.numeroDeposito = numeroDeposito; // Asignar numeroDeposito al atributo
+
         try {
-            Producto producto = exp.comprarProducto(moneda, numeroDeposito);
-            sonido = consumirProducto(producto);
+            productoConsumido = exp.comprarProducto(moneda, numeroDeposito);
+            if (productoConsumido != null) {
+                consumirProducto(productoConsumido);
+            }
 
             Moneda vuelto;
             while ((vuelto = exp.getVuelto()) != null) {
@@ -18,23 +23,25 @@ class Comprador {
         }
     }
 
-    private String consumirProducto(Producto producto) {
+    private void consumirProducto(Producto producto) {
         if (producto != null) {
-            switch (producto) {
-                case BEBIDA:
-                    return "Bebida adquirida";
-                case SNACK:
-                    return "Snack adquirido";
-            }
+            System.out.println("Producto adquirido: ");
         }
-        return null;
     }
 
     public int cuantoVuelto() {
         return vueltoTotal;
     }
 
-    public String queBebiste() {
-        return sonido;
+    public String queConsumiste() {
+        if (productoConsumido != null) {
+            if (numeroDeposito <= 2) {
+                return Producto.Bebida.values()[numeroDeposito - 1].getNombre();
+            } else {
+                return Producto.Snack.values()[numeroDeposito - 3].getNombre();
+            }
+        } else {
+            return "Ningún producto adquirido";
+        }
     }
 }
