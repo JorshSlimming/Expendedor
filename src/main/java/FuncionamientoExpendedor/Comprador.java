@@ -6,7 +6,7 @@ package FuncionamientoExpendedor;
 class Comprador {
     private Producto productoConsumido;
     private int vueltoTotal;
-    private int numeroDeposito; // Número de depósito utilizado para la compra
+    private final int numeroDeposito; // Número de depósito utilizado para la compra
 
     /**
      * Crea un nuevo comprador que realiza una transacción de compra en el expendedor.
@@ -41,6 +41,19 @@ class Comprador {
      */
     public int cuantoVuelto() {
         return vueltoTotal;
+    }
+
+    /**
+     * Método para obtener el vuelto en monedas de 100.
+     * Este método devuelve una moneda de 100 cada vez que es llamado, hasta que el vuelto disponible se agota.
+     * @return El valor de una moneda de 100 si hay vuelto disponible, de lo contrario devuelve 0.
+     */
+    public int getVuelto(){
+        if (vueltoTotal>=100){
+            vueltoTotal = vueltoTotal - 100;
+            return 100;
+        }
+        return 0;
     }
 
     /**

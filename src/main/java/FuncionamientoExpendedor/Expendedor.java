@@ -5,9 +5,9 @@ package FuncionamientoExpendedor;
  */
 class Expendedor {
     // Depósitos para las bebidas, snacks y monedas de cambio
-    private Deposito<Producto.Bebida> bebidas;
-    private Deposito<Producto.Snack> snacks;
-    private Deposito<Moneda> vuelto;
+    final private Deposito<Producto.Bebida> bebidas;
+    final private Deposito<Producto.Snack> snacks;
+    final private Deposito<Moneda> vuelto;
 
     /**
      * Constructor de la clase Expendedor.
@@ -139,7 +139,7 @@ class Expendedor {
     /**
      * Excepción para indicar que el pago es incorrecto.
      */
-    public class PagoIncorrectoException extends Exception {
+    public static class PagoIncorrectoException extends Exception {
         public PagoIncorrectoException() {
             super("Pago incorrecto");
         }
@@ -148,7 +148,7 @@ class Expendedor {
     /**
      * Excepción para indicar que no hay producto disponible.
      */
-    public class NoHayProductoException extends Exception {
+    public static class NoHayProductoException extends Exception {
         public NoHayProductoException() {
             super("No hay producto disponible");
         }

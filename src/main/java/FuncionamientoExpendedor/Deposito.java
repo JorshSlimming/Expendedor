@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * @param <T> El tipo de objeto que se almacenará en el depósito.
  */
 class Deposito<T> {
-    private ArrayList<T> al; // Lista que almacena los objetos en el depósito
+    private final ArrayList<T> al; // Lista que almacena los objetos en el depósito
 
     /**
      * Crea un nuevo depósito vacío.
