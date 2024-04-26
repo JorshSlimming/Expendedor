@@ -24,23 +24,23 @@ public class Main {
         System.out.println("Comprador 1: Producto adquirido: " + comprador1.queConsumiste() + ", vuelto total: " + comprador1.cuantoVuelto());
 
         // Se llama a la función getVuelto 8 veces, las primeras 7 entregará los 700 de vuelto total en monedas de 100 y la última debería entregar 0.
-        System.out.println(comprador1.getVuelto());
-        System.out.println(comprador1.getVuelto());
-        System.out.println(comprador1.getVuelto());
-        System.out.println(comprador1.getVuelto());
-        System.out.println(comprador1.getVuelto());
-        System.out.println(comprador1.getVuelto());
-        System.out.println(comprador1.getVuelto());
-        System.out.println(comprador1.getVuelto());
+        System.out.println(comprador1.getVuelto100());
+        System.out.println(comprador1.getVuelto100());
+        System.out.println(comprador1.getVuelto100());
+        System.out.println(comprador1.getVuelto100());
+        System.out.println(comprador1.getVuelto100());
+        System.out.println(comprador1.getVuelto100());
+        System.out.println(comprador1.getVuelto100());
+        System.out.println(comprador1.getVuelto100());
 
         // Comprar un snack con moneda de $500 y depósito 3
         Comprador comprador2 = new Comprador(moneda500, 3, expendedor);
         System.out.println("Comprador 2: Producto adquirido: " + comprador2.queConsumiste() + ", vuelto: " + comprador2.cuantoVuelto());
-        System.out.println(comprador2.getVuelto());
-        System.out.println(comprador2.getVuelto());
-        System.out.println(comprador2.getVuelto());
-        System.out.println(comprador2.getVuelto());
-        System.out.println(comprador2.getVuelto());
+        System.out.println(comprador2.getVuelto100());
+        System.out.println(comprador2.getVuelto100());
+        System.out.println(comprador2.getVuelto100());
+        System.out.println(comprador2.getVuelto100());
+        System.out.println(comprador2.getVuelto100());
 
         // Intentar comprar un snack con moneda de $100 y depósito 2 (debería lanzar una PagoIncorrectoException)
         Comprador comprador3 = new Comprador(moneda100, 2, expendedor); // Error: PagoIncorrectoException

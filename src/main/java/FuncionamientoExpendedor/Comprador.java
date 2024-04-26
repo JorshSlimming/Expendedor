@@ -48,7 +48,7 @@ class Comprador {
      * Este método devuelve una moneda de 100 cada vez que es llamado, hasta que el vuelto disponible se agota.
      * @return El valor de una moneda de 100 si hay vuelto disponible, de lo contrario devuelve 0.
      */
-    public int getVuelto(){
+    public int getVuelto100(){
         if (vueltoTotal>=100){
             vueltoTotal = vueltoTotal - 100;
             return 100;
