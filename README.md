@@ -6,4 +6,5 @@
     - Jorge Slimming
 
     
-![Diagrama]([https://github.com/JorshSlimming/Expendedor/assets/167927868/073733c1-e6f1-4588-8bf0-7c7b252ca25d](https://raw.githubusercontent.com/JorshSlimming/Expendedor/main/Diagrama.png))
+
+![Diagrama](https://github.com/JorshSlimming/Expendedor/assets/167927868/48ebebf8-40a1-4bf8-b4bc-314df86c2c22)
