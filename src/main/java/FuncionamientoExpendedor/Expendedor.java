@@ -3,6 +3,7 @@ package FuncionamientoExpendedor;
 /**
  * Clase Expendedor que representa una máquina expendedora de bebidas y snacks.
  */
+
 class Expendedor {
     // Depósitos para las bebidas, snacks y monedas de cambio
     final private Deposito<Producto.Bebida> bebidas;
@@ -11,8 +12,9 @@ class Expendedor {
 
     /**
      * Constructor de la clase Expendedor.
+     *
      * @param numBebidas Número de bebidas a añadir en el depósito.
-     * @param numSnacks Número de snacks a añadir en el depósito.
+     * @param numSnacks  Número de snacks a añadir en el depósito.
      */
     public Expendedor(int numBebidas, int numSnacks) {
         // Inicialización de los depósitos
@@ -32,13 +34,15 @@ class Expendedor {
 
     /**
      * Método para comprar un producto.
-     * @param moneda Moneda utilizada para la compra.
+     *
+     * @param moneda         Moneda utilizada para la compra.
      * @param numeroDeposito Número del depósito del producto a comprar.
      * @return Producto comprado.
      * @throws PagoIncorrectoException Si el pago es incorrecto.
-     * @throws NoHayProductoException Si no hay producto disponible.
+     * @throws NoHayProductoException  Si no hay producto disponible.
+     * @throws PagoInsuficienteException Si el pago es insuficiente.
      */
-    public Producto comprarProducto(Moneda moneda, int numeroDeposito) throws PagoIncorrectoException, NoHayProductoException {
+    public Producto comprarProducto(Moneda moneda, int numeroDeposito) throws PagoIncorrectoException, NoHayProductoException, PagoInsuficienteException {
         Producto producto = null;
 
         // Selección del producto a comprar
@@ -67,13 +71,15 @@ class Expendedor {
 
     /**
      * Método para comprar una bebida.
+     *
      * @param moneda Moneda utilizada para la compra.
      * @param bebida Bebida a comprar.
      * @return Producto comprado.
      * @throws PagoIncorrectoException Si el pago es incorrecto.
-     * @throws NoHayProductoException Si no hay producto disponible.
+     * @throws NoHayProductoException  Si no hay producto disponible.
+     * @throws PagoInsuficienteException Si el pago es insuficiente.
      */
-    private Producto comprarBebida(Moneda moneda, Producto.Bebida bebida) throws PagoIncorrectoException, NoHayProductoException {
+    private Producto comprarBebida(Moneda moneda, Producto.Bebida bebida) throws PagoIncorrectoException, NoHayProductoException, PagoInsuficienteException {
         int precio = bebida.getPrecio();
         if (moneda == null) {
             throw new PagoIncorrectoException();
@@ -82,6 +88,9 @@ class Expendedor {
             bebidas.getObject(); // Sacar la bebida del depósito
             getVuelto(moneda.getValor() - precio);
             return Producto.BEBIDA;
+        } else if (moneda.getValor() >= 100 && moneda.getValor() < precio) {
+            getVuelto(moneda.getValor());
+            throw new PagoInsuficienteException();
         } else {
             throw new PagoIncorrectoException();
         }
@@ -89,13 +98,15 @@ class Expendedor {
 
     /**
      * Método para comprar un snack.
+     *
      * @param moneda Moneda utilizada para la compra.
-     * @param snack Snack a comprar.
+     * @param snack  Snack a comprar.
      * @return Producto comprado.
      * @throws PagoIncorrectoException Si el pago es incorrecto.
-     * @throws NoHayProductoException Si no hay producto disponible.
+     * @throws NoHayProductoException  Si no hay producto disponible.
+     * @throws PagoInsuficienteException Si el pago es insuficiente.
      */
-    private Producto comprarSnack(Moneda moneda, Producto.Snack snack) throws PagoIncorrectoException, NoHayProductoException {
+    private Producto comprarSnack(Moneda moneda, Producto.Snack snack) throws PagoIncorrectoException, NoHayProductoException, PagoInsuficienteException {
         int precio = snack.getPrecio();
         if (moneda == null) {
             throw new PagoIncorrectoException();
@@ -104,6 +115,9 @@ class Expendedor {
             snacks.getObject();
             getVuelto(moneda.getValor() - precio);
             return Producto.SNACK;
+        } else if (moneda.getValor() >= 100 && moneda.getValor() < precio) {
+            getVuelto(moneda.getValor());
+            throw new PagoInsuficienteException();
         } else {
             throw new PagoIncorrectoException();
         }
@@ -111,6 +125,7 @@ class Expendedor {
 
     /**
      * Método para obtener el cambio.
+     *
      * @param cambio Cantidad de cambio a devolver.
      */
     private void getVuelto(int cambio) {
@@ -128,8 +143,13 @@ class Expendedor {
         }
     }
 
+    public int obtenerCantidadTotalProductos(){
+        return 4;
+    }
+
     /**
      * Método para obtener el cambio.
+     *
      * @return Moneda de cambio.
      */
     public Moneda getVuelto() {
@@ -151,6 +171,15 @@ class Expendedor {
     public static class NoHayProductoException extends Exception {
         public NoHayProductoException() {
             super("No hay producto disponible");
+        }
+    }
+
+    /**
+     * Excepción para indicar que el pago es insuficiente.
+     */
+    public static class PagoInsuficienteException extends Exception {
+        public PagoInsuficienteException() {
+            super("Pago insuficiente");
         }
     }
 }
