@@ -7,4 +7,4 @@
 
     
 
-![Diagrama](https://github.com/JorshSlimming/Expendedor/assets/167927868/48ebebf8-40a1-4bf8-b4bc-314df86c2c22)
+![Diagrama](https://github.com/JorshSlimming/Expendedor/blob/f3eb72069db52e9035b8c0616cecd21d0e6444d3/Diagrama.png)
