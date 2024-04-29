@@ -4,7 +4,7 @@ package FuncionamientoExpendedor;
  * Representa un comprador que realiza una transacción de compra en un expendedor.
  */
 class Comprador {
-    private Producto productoConsumido;
+    private final Producto productoConsumido;
     private int vueltoTotal;
     private final int numeroDeposito; // Número de depósito utilizado para la compra
 
@@ -14,23 +14,34 @@ class Comprador {
      * @param moneda        La moneda utilizada para la compra.
      * @param numeroDeposito El número de depósito del producto deseado.
      * @param exp           El expendedor donde se realiza la compra.
+     * @throws Expendedor.PagoIncorrectoException Si el pago es incorrecto.
+     * @throws Expendedor.NoHayProductoException Si no hay producto disponible.
+     * @throws Expendedor.PagoInsuficienteException Si el pago es insuficiente.
      */
-    public Comprador(Moneda moneda, int numeroDeposito, Expendedor exp) {
+    public Comprador(Moneda moneda, int numeroDeposito, Expendedor exp)
+            throws Expendedor.PagoIncorrectoException, Expendedor.NoHayProductoException, Expendedor.PagoInsuficienteException {
         this.numeroDeposito = numeroDeposito; // Asignar numeroDeposito al atributo
 
-        try {
-            // Realizar la compra en el expendedor
-            productoConsumido = exp.comprarProducto(moneda, numeroDeposito);
-            Moneda vuelto;
+        if (moneda == null) {
+            throw new Expendedor.PagoIncorrectoException();
+        }
 
-            // Calcular el vuelto total recibido
-            while ((vuelto = exp.getVuelto()) != null) {
-                vueltoTotal += vuelto.getValor();
-            }
-        } catch (Expendedor.PagoIncorrectoException e) {
-            System.out.println(e.getMessage());
-        } catch (Expendedor.NoHayProductoException e) {
-            System.out.println(e.getMessage());
+        // Verificar si el numeroDeposito está fuera del rango de productos disponibles
+        if (numeroDeposito <= 0 || numeroDeposito > exp.obtenerCantidadTotalProductos()) {
+            throw new Expendedor.NoHayProductoException();
+        }
+
+        // Realizar la compra en el expendedor
+        productoConsumido = exp.comprarProducto(moneda, numeroDeposito);
+        if (productoConsumido == null) {
+            throw new Expendedor.NoHayProductoException(); // Lanzar excepción si no hay producto disponible
+        }
+
+        Moneda vuelto;
+
+        // Calcular el vuelto total recibido
+        while ((vuelto = exp.getVuelto()) != null) {
+            vueltoTotal += vuelto.getValor();
         }
     }
 
@@ -46,10 +57,11 @@ class Comprador {
     /**
      * Método para obtener el vuelto en monedas de 100.
      * Este método devuelve una moneda de 100 cada vez que es llamado, hasta que el vuelto disponible se agota.
+     *
      * @return El valor de una moneda de 100 si hay vuelto disponible, de lo contrario devuelve 0.
      */
-    public int getVuelto100(){
-        if (vueltoTotal>=100){
+    public int getVuelto100() {
+        if (vueltoTotal >= 100) {
             vueltoTotal = vueltoTotal - 100;
             return 100;
         }

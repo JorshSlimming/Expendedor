@@ -32,9 +32,9 @@ class Deposito<T> {
      * @return El primer objeto del depósito, o null si el depósito está vacío.
      */
     public T getObject() {
-        if (al.size() == 0) {
+        if (al.isEmpty()) {
             return null; // Devuelve null si el depósito está vacío
         }
-        return al.remove(0); // Devuelve y remueve el primer objeto del depósito
+        return al.removeFirst(); // Devuelve y remueve el primer objeto del depósito
     }
 }
